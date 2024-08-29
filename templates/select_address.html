@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Address</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 900px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        h2 {
+            color: #2874f0;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .address-card {
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .address-card:hover {
+            border-color: #2874f0;
+            background-color: #f0f8ff;
+        }
+        .address-card .address-radio {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .address-card .address-details {
+            margin-left: 50px;
+        }
+        .address-card .address-details h5 {
+            color: #343a40;
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+        .address-card .address-details p {
+            color: #6c757d;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        .address-card .address-details p i {
+            color: #2874f0;
+            margin-right: 10px;
+        }
+        .btn-primary, .btn-success {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border-radius: 50px;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #2874f0;
+            border-color: #2874f0;
+        }
+        .btn-success {
+            background-color: #ffcc00;
+            border-color: #ffcc00;
+        }
+        .btn-primary:hover, .btn-success:hover {
+            opacity: 0.9;
+        }
+        .add-address-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #2874f0;
+            text-decoration: none;
+        }
+        .add-address-link:hover {
+            text-decoration: underline;
+        }
+        .address-card .icon-container {
+            font-size: 1.5rem;
+            color: #2874f0;
+            margin-right: 20px;
+        }
+        .no-address-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+        .alert {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2><i class="fas fa-map-marker-alt"></i> Select Address</h2>
+
+    <!-- Error Section -->
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'payment' %}">
+        {% csrf_token %}
+        {% if addresses %}
+            {% for address in addresses %}
+            <div class="address-card d-flex align-items-start">
+                <input type="radio" name="address" value="{{ address.id }}" class="address-radio" required>
+                <div class="address-details">
+                    <h5>{{ address.full_name }}</h5>
+                    <p><i class="fas fa-home"></i> {{ address.street_address }}, {{ address.city }}, {{ address.state }}, {{ address.postal_code }}, {{ address.country }}</p>
+                    <p><i class="fas fa-phone-alt"></i> {{ customer.Phone }}</p>
+                    <p><i class="fas fa-envelope"></i> {{ customer.email }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-address-message">
+                <p>No addresses available. <a href="{% url 'add_address' %}" class="btn btn-primary">Add Address</a></p>
+            </div>
+        {% endif %}
+        <a href="{% url 'add_address' %}" class="add-address-link"><i class="fas fa-plus-circle"></i> Add New Address</a>
+        <button type="submit" class="btn btn-success">Proceed to Payment</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

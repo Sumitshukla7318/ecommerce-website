@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CMS Pro</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="bg-dark text-white p-3 d-flex align-items-center">
+        <div class="container d-flex justify-content-between">
+            <a href="index.html" class="text-white text-decoration-none">
+                <h1 class="h4">CMS Pro</h1>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main mt-5">
+        <div class="container">
+            <div class="pagetitle mb-4">
+                <h1>Dashboard</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active">Products</li>
+                    </ol>
+                </nav>
+            </div>
+
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in prods %}
+                    <tr>
+                        <th scope="row">{{ p.id }}</th>
+                        <td>{{ p.name }}</td>
+                        <td>{{ p.price }}</td>
+                        <td>{{ p.category.name }}</td>
+                        <td>{{ p.des }}</td>
+                        <td><img src="{{ p.image.url }}" alt="{{ p.name }}" class="img-fluid" style="height: 60px; width: 60px;"></td>
+                        <td>
+                            <a href="{% url "editproduct" p.id %}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{% url 'deleteproduct' p.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            &copy; 2024 CMS Pro. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

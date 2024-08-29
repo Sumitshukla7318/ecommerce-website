@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .product-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+        .product-details {
+            padding: 20px;
+        }
+        .product-details p {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .price {
+            color: #e74c3c;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .buy-now-btn {
+            margin-top: 20px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+        .buy-now-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>{{ order.product.name }}</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ order.product.image.url }}" alt="{{ order.product.name }}" class="product-image">
+            </div>
+            <div class="col-md-6 product-details">
+                <p><strong>Description:</strong> {{ order.product.description }}</p>
+                <p class="price">Price: ${{ order.product.price }}</p>
+                <button class="btn buy-now-btn"><i class="fas fa-shopping-cart"></i> Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

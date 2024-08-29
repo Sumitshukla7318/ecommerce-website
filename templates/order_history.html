@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .container { margin-top: 30px; }
+        .order-card {
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .order-card:hover { box-shadow: 0 6px 12px rgba(0,0,0,0.2); }
+        .order-status { font-weight: bold; }
+        .order-image { max-width: 100px; max-height: 100px; object-fit: cover; }
+        .order-details { margin-top: 10px; }
+        .order-actions { margin-top: 15px; }
+        .order-actions .btn { margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-4">Order History</h2>
+        <div class="row">
+            {% for order in orders %}
+            <div class="col-md-6 col-lg-4">
+                <div class="order-card">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="{{ order.product.image.url }}" alt="{{ order.product.name }}" class="order-image">
+                        </div>
+                        <div class="col-md-8">
+                            <h5 class="mb-3">Order ID: {{ order.id }}</h5>
+                            <p><strong>Product:</strong> {{ order.product.name }}</p>
+                            <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+                            <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
+                            <p><strong>Order Date:</strong> {{ order.order_date }}</p>
+                            <p class="order-status"><strong>Status:</strong> {{ order.status }}</p>
+                            <div class="order-actions">
+                                <a href="{% url 'order_detail_view' order.id %}" class="btn btn-info">View Details</a>
+                                {% if order.status == 'Pending' %}
+                                <a href="{% url 'confirm_order_view' order.id %}" class="btn btn-success">Confirm Order</a>
+                                <button class="btn btn-danger" onclick="confirmCancel({{ order.id }})">Cancel Order</button>
+                                {% elif order.is_returnable %}
+                                <a href="#" class="btn btn-warning">Return Order</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info" role="alert">You have no orders yet.</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function confirmCancel(orderId) {
+            if (confirm('Are you sure you want to cancel this order?')) {
+                window.location.href = '/cancel-order/' + orderId + '/';
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

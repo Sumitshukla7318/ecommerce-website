@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .profile-wrapper {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 900px;
+        }
+        .profile-sidebar {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .profile-sidebar img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 5px solid #ffffff;
+            margin-bottom: 15px;
+        }
+        .profile-sidebar h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .profile-sidebar p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .profile-sidebar .actions a {
+            text-decoration: none;
+            color: #007bff;
+            background-color: #ffffff;
+            border: 2px solid #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .profile-sidebar .actions a:hover {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+        .profile-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        .profile-content ul li {
+            margin-bottom: 15px;
+        }
+        .profile-content ul li a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        .profile-content ul li a i {
+            margin-right: 10px;
+        }
+        .profile-content ul li a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container profile-wrapper">
+        <div class="row">
+            <div class="col-md-4 profile-sidebar">
+                <img src="{{ customer.image.url }}" alt="Profile Picture">
+                <h2>{{ customer.fname }} {{ customer.lname }}</h2>
+                <p>{{ customer.email }}</p>
+                <div class="actions">
+                    <a href="#">Edit Profile</a>
+                </div>
+            </div>
+            
+            <div class="col-md-8 profile-content">
+                <h3 class="mb-4">My Account</h3>
+                <ul>
+                    <li><a href="{% url 'order_history' %}"><i class="fas fa-box"></i> Orders</a></li>
+                    <li><a href="{% url 'address_management' %}"><i class="fas fa-map-marker-alt"></i> Addresses</a></li>
+                    <li><a href="#"><i class="fas fa-heart"></i> Wishlist</a></li>
+                    <li><a href="#"><i class="fas fa-credit-card"></i> Payment Methods</a></li>
+                    <li><a href="{% url 'user_logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

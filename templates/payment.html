@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Payment</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        h2 {
+            color: #343a40;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .payment-method {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .payment-method:hover {
+            border-color: #007bff;
+            background-color: #f8f9fa;
+        }
+        .payment-method input[type="radio"] {
+            margin-right: 10px;
+        }
+        .payment-method label {
+            margin-bottom: 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #495057;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Select Payment Method</h2>
+        <form method="post" action="{% url 'place_order' %}">
+            {% csrf_token %}
+            <div class="payment-method">
+                <input type="radio" name="payment_method" value="card" id="card" required>
+                <label for="card"><i class="fas fa-credit-card"></i> Credit/Debit Card</label>
+            </div>
+            <div class="payment-method">
+                <input type="radio" name="payment_method" value="upi" id="upi">
+                <label for="upi"><i class="fas fa-mobile-alt"></i> UPI</label>
+            </div>
+            <div class="payment-method">
+                <input type="radio" name="payment_method" value="cod" id="cod">
+                <label for="cod"><i class="fas fa-money-bill-wave"></i> Cash on Delivery</label>
+            </div>
+            <button type="submit" class="btn btn-success mt-4">Place Order</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -456,6 +456,61 @@ def buy_now(request):
     return HttpResponseBadRequest("Invalid request method.")
 
 
+def edit_profile_view(request):
+    if not request.session.get('customer_id'):
+        messages.error(request, "Please log in first")
+        return redirect('user_login')
+
+    customer_id = request.session['customer_id']
+    customer = Customer.objects.get(id=customer_id)
+
+    if request.method == "POST":
+        if 'otp' in request.POST:
+            entered_otp = request.POST.get('otp')
+            try:
+                customer_otp_entry = customer_otp.objects.get(customer=customer, otp=entered_otp)
+            except customer_otp.DoesNotExist:
+                messages.error(request, "Invalid OTP. Please try again.")
+                return render(request, 'otp_form.html')
+
+            messages.success(request, "OTP verified. You can now edit your profile.")
+            return render(request, 'edit_profile.html', {'customer': customer})
+
+
+        elif 'fname' in request.POST:
+
+            fname = request.POST.get('fname')
+            email = request.POST.get('email')
+            phone = request.POST.get('phone')
+            password = request.POST.get('pass1')
+
+            customer.fname = fname
+            customer.email = email
+            customer.Phone = phone
+            customer.pass1 = password
+            customer.pass2=password
+            customer.save()
+
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('/profile/')
+
+    else:
+        otp = str(random.randint(100000, 999999))
+        customer_otp.objects.create(customer=customer, otp=otp)
+
+        send_mail(
+            'Your OTP for Profile Edit',
+            f'Your OTP is {otp}',
+            'noreply@yourshop.com',
+    
+            [customer.email],
+            fail_silently=False,
+        )
+        messages.success(request, 'An OTP has been sent to your email.')
+        return render(request, 'otp_verification.html')
+
+
+
 
 
 
